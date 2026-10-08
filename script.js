@@ -8,14 +8,14 @@
 const GAMES = [
   { day: 1,  title: "Stop at 10.00",              blurb: "Stop the clock at exactly ten seconds. No peeking.",   path: "day1/",  live: false },
   { day: 2,  title: "The Button You Can't Click", blurb: "It wants to be clicked. But it won't be that easy.",   path: "day2/",  live: false },
-  { day: 3,  title: "Unbeatable Tic-Tac-Toe",     blurb: "", path: "day3/",  live: false },
-  { day: 4,  title: "Emoji Hangman",              blurb: "", path: "day4/",  live: false },
-  { day: 5,  title: "", blurb: "", path: "day5/",  live: false },
-  { day: 6,  title: "", blurb: "", path: "day6/",  live: false },
-  { day: 7,  title: "", blurb: "", path: "day7/",  live: false },
-  { day: 8,  title: "", blurb: "", path: "day8/",  live: false },
-  { day: 9,  title: "", blurb: "", path: "day9/",  live: false },
-  { day: 10, title: "", blurb: "", path: "day10/", live: false },
+  { day: 3,  title: "Unbeatable Tic-Tac-Toe",     blurb: "The machine never loses. Prove me wrong.", path: "day3/",  live: false },
+  { day: 4,  title: "Emoji Hangman",              blurb: "Guess the movie from the emojis before time runs out.", path: "day4/",  live: false },
+  { day: 5,  title: "Silly Typing Test",          blurb: "Type absurd sentences as fast as you can.", path: "day5/",  live: false },
+  { day: 6,  title: "Simon Says",                 blurb: "Watch the lights. Repeat the pattern.", path: "day6/",  live: false },
+  { day: 7,  title: "Life Calculator",            blurb: "Type your birthday and read the numbers of your life.", path: "day7/",  live: false },
+  { day: 8,  title: "Password Incorrect",         blurb: "Regular passwords won't cut it anymore.", path: "day8/",  live: false },
+  { day: 9,  title: "Anaconda",                   blurb: "This snake's not playing fair.", path: "day9/",  live: false },
+  { day: 10, title: "5 Letter Word",              blurb: "Guess my word in 6 tries. The final step.", path: "day10/", live: false },
 ];
 
 const KANJI = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
