@@ -174,10 +174,17 @@ h1 {
 .panel.live {
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
-.panel.live:hover,
+/* Keyboard focus always gets the lift. Hover only applies to mouse users,
+   so a tap on a phone doesn't leave a panel stuck "lifted". */
 .panel.live:focus-visible {
   transform: translate(-4px, -4px);
   box-shadow: 6px 6px 0 var(--ink);   /* hard ink shadow, no blur */
+}
+@media (hover: hover) {
+  .panel.live:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
 }
 .panel.live:active {
   transform: translate(0, 0);

@@ -1,0 +1,161 @@
+/* Same ink, paper and highlighter colours as the hub page */
+:root {
+  --ink:   #000000;
+  --paper: #ffffff;
+  --mist:  #ececea;
+  --shu:   #c8352b;
+  --hi:    #f2ff3d;
+
+  --font-head: "Nunito", system-ui, sans-serif;
+  --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --line: 3px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(20px, 5vw, 48px) clamp(16px, 4vw, 32px) 48px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--shu);
+  outline-offset: 4px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  border-bottom: var(--line) solid var(--ink);
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+h1 {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 9vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.35em;
+}
+
+.intro { margin: 0 0 28px; max-width: 32em; }
+
+/* ---------- The stage: one big manga panel ---------- */
+.stage {
+  border: 4px solid var(--ink);
+  padding: clamp(18px, 5vw, 36px);
+  text-align: center;
+}
+
+.clock {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(4rem, 22vw, 8rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;  /* digits all the same width so the number doesn't wobble */
+  margin-bottom: 20px;
+  min-height: 1em;
+}
+.clock.hidden-time { color: var(--mist); }   /* numbers have vanished */
+.clock.reveal { background: var(--hi); }     /* highlighter swipe on the final time */
+
+.big-btn {
+  width: 100%;
+  padding: 18px 12px;
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: 1.75rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  touch-action: manipulation;   /* no double-tap zoom delay on phones */
+}
+/* Only mouse users get the lift effect. On touchscreens a tap would leave it stuck on. */
+@media (hover: hover) {
+  .big-btn:hover { transform: translate(-4px, -4px); box-shadow: 6px 6px 0 var(--ink); }
+  .small-btn:hover { background: var(--hi); }
+}
+.big-btn:active { transform: translate(0, 0); box-shadow: 0 0 0 var(--ink); }
+.big-btn.running { background: var(--ink); color: var(--paper); }
+
+.hint { margin: 12px 0 0; font-size: 0.9rem; }
+
+.result { margin-top: 18px; min-height: 4.5em; }
+.result .verdict {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin: 0;
+}
+.result .detail { margin: 2px 0 0; }
+
+/* Hanko seal for a perfect score */
+.seal {
+  display: inline-grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  margin-bottom: 6px;
+  background: var(--shu);
+  color: var(--paper);
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: 1.3rem;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 3px var(--shu), inset 0 0 0 4.5px rgba(255,255,255,.85);
+  transform: rotate(-6deg);
+  animation: stamp 0.42s cubic-bezier(.2,.9,.3,1.2) both;
+}
+@keyframes stamp {
+  0%   { opacity: 0; transform: scale(1.7) rotate(-16deg); }
+  65%  { opacity: 1; transform: scale(0.92) rotate(-4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+
+/* ---------- Stats ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+.stat { border: var(--line) solid var(--ink); padding: 10px 14px; }
+.stat-label { display: block; font-size: 0.9rem; }
+.stat-value { font-family: var(--font-head); font-weight: 900; font-size: 1.6rem; line-height: 1.2; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.small-btn {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .big-btn { transition: none; }
+  .big-btn:hover { transform: none; }
+  .seal { animation: none; }
+}

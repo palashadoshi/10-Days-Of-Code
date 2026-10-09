@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stop at 10.00</title>
+  <meta name="description" content="Stop the clock at exactly ten seconds. The numbers disappear. No peeking.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+
+    <a class="back" href="../">Back to all games</a>
+
+    <h1>Stop at 10.00</h1>
+    <p class="intro">
+      Press Start. The clock runs for 2 seconds, then the numbers vanish.
+      Press Stop when you think it's exactly 10.00.
+    </p>
+
+    <section class="stage" aria-label="Game">
+      <!-- The big number. aria-hidden because it changes every 10ms and would spam screen readers -->
+      <div class="clock" id="clock" aria-hidden="true">0.00</div>
+
+      <button class="big-btn" id="action" type="button">Start</button>
+      <p class="hint">Tip: you can also press the space bar.</p>
+
+      <!-- Result appears here after each try. aria-live reads it out loud for screen readers -->
+      <div class="result" id="result" aria-live="polite"></div>
+    </section>
+
+    <section class="stats" aria-label="Your stats">
+      <div class="stat">
+        <span class="stat-label">Closest ever</span>
+        <span class="stat-value" id="best">None yet</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Tries</span>
+        <span class="stat-value" id="tries">0</span>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="small-btn" id="share" type="button" hidden>Copy my score</button>
+      <button class="small-btn" id="reset" type="button">Reset stats</button>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
