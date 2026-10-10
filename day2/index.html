@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Button You Can't Click</title>
+  <meta name="description" content="60 seconds. One button that never stops moving. How many times can you click it?">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+
+  <!-- Same fonts as the hub page -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&text=%E5%8D%81%E6%97%A5%E9%96%93%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8%E4%B8%80%E4%BA%8C%E4%B8%89%E5%9B%9B%E4%BA%94%E5%85%AD%E4%B8%83%E5%85%AB%E4%B9%9D%E9%81%8A&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="/analytics.js"></script>
+</head>
+<body>
+  <main class="page">
+
+    <a class="back" href="../">Back to all games</a>
+
+    <header class="top">
+      <div class="seal" lang="ja" aria-hidden="true">二</div>
+      <div>
+        <h1>The Button<br>You Can't Click</h1>
+        <p class="intro">
+          You have 60 seconds. Click it as many times as you can.
+          It speeds up every 5 clicks, and in the last 10 seconds it starts teleporting.
+        </p>
+      </div>
+    </header>
+
+    <!-- Live stats -->
+    <div class="stats">
+      <p id="time-box"><span class="stat-label">Time left</span> <strong id="time">60.0s</strong></p>
+      <p><span class="stat-label">Clicks</span> <strong id="clicks">0</strong></p>
+      <p><span class="stat-label">Speed</span> <strong id="speed">x1.00</strong></p>
+      <p><span class="stat-label">Best</span> <strong id="best">0</strong></p>
+    </div>
+
+    <!-- The arena: the button moves around inside this box -->
+    <div class="arena" id="arena">
+      <button class="prize gone" id="prize" type="button" tabindex="-1">Click me for a prize!</button>
+      <p class="taunt" id="taunt" role="status">Press start when you're ready.</p>
+
+      <div class="start" id="start">
+        <button class="btn" id="start-btn" type="button">Start</button>
+      </div>
+    </div>
+
+    <!-- Shown when time runs out -->
+    <section class="win" id="win" hidden>
+      <div class="seal" lang="ja" aria-hidden="true">二</div>
+      <h2>Time's up!</h2>
+      <p class="win-text" id="win-text"></p>
+      <div class="win-actions">
+        <button class="btn" id="share" type="button">Copy my score</button>
+        <button class="btn btn-ghost" id="again" type="button">Play again</button>
+      </div>
+      <p class="win-note" id="share-note" role="status"></p>
+    </section>
+
+    <noscript><p class="noscript">This game needs JavaScript. Please turn it on and refresh.</p></noscript>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
