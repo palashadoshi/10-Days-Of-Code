@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unbeatable Tic-Tac-Toe | Day 3</title>
+  <meta name="description" content="The machine never loses. Prove me wrong.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⭕</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Only the kanji used on this page: win / lose / draw -->
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&text=%E5%8B%9D%E8%B2%A0%E5%BC%95&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <a class="back" href="../">All games</a>
+
+    <!-- Secret: swipes on this area feed the Konami code on phones -->
+    <header class="swipe-zone" id="swipe-zone">
+      <h1>Unbeatable Tic-Tac-Toe</h1>
+      <p class="intro">You are X. Your opponent is O. Win if you can.</p>
+    </header>
+
+    <div class="controls">
+      <div class="group">
+        <span class="group-label">Players</span>
+        <div class="seg" role="group" aria-label="Number of players">
+          <button type="button" data-players="1p" aria-pressed="true">1 Player</button>
+          <button type="button" data-players="2p" aria-pressed="false">2 Players</button>
+        </div>
+      </div>
+      <div class="group" id="group-machine">
+        <span class="group-label">Machine</span>
+        <div class="seg" role="group" aria-label="Machine skill">
+          <button type="button" data-mode="easy" aria-pressed="false">Easy</button>
+          <button type="button" data-mode="medium" aria-pressed="false">Medium</button>
+          <button type="button" data-mode="hard" aria-pressed="false">Hard</button>
+          <button type="button" data-mode="unbeatable" aria-pressed="true">Unbeatable</button>
+        </div>
+      </div>
+      <div class="group" id="group-first">
+        <span class="group-label">Goes first</span>
+        <div class="seg" role="group" aria-label="Who goes first">
+          <button type="button" data-starter="you" aria-pressed="true">You</button>
+          <button type="button" data-starter="machine" aria-pressed="false">Machine</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+
+    <div class="stage">
+      <div class="board" id="board" role="grid" aria-label="Tic-tac-toe board"></div>
+      <div class="result" id="result" role="dialog" aria-label="Round result">
+        <div class="seal" id="seal" lang="ja" aria-hidden="true"></div>
+        <p class="result-text" id="result-text"></p>
+        <button type="button" class="btn" id="again">Play again</button>
+      </div>
+    </div>
+
+    <div class="record" id="record" aria-label="Your record"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="secret-pad" id="secret-pad">
+      <p>Secret menu. Tap B, then A.</p>
+      <div class="secret-keys">
+        <button type="button" class="btn" data-key="b">B</button>
+        <button type="button" class="btn" data-key="a">A</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="/analytics.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

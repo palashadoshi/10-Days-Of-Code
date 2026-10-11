@@ -1,0 +1,263 @@
+:root {
+  --ink:   #000000;
+  --paper: #ffffff;
+  --mist:  #ececea;
+  --shu:   #c8352b;  /* seals only */
+  --hi:    #f2ff3d;  /* highlighter */
+  --font-head: "Nunito", "Zen Maru Gothic", system-ui, sans-serif;
+  --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-jp:   "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --line: 3px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: clamp(20px, 5vw, 48px) clamp(16px, 4vw, 28px) 40px;
+}
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--shu);
+  outline-offset: 3px;
+}
+
+.back {
+  display: inline-block;
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: var(--line) solid var(--ink);
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 9vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.3em;
+}
+.intro { margin: 0 0 24px; max-width: 30em; }
+
+/* ---- Controls ---- */
+.controls { display: grid; gap: 12px; margin-bottom: 20px; }
+.group { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+.group[hidden] { display: none; }
+.group-label { font-family: var(--font-head); font-weight: 800; min-width: 5.5em; }
+.seg { display: inline-flex; border: var(--line) solid var(--ink); }
+.seg button {
+  appearance: none;
+  border: 0;
+  border-right: var(--line) solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 6px 11px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+@media (hover: hover) {
+  .seg button[aria-pressed="false"]:hover { background: var(--mist); }
+}
+
+/* ---- Status ---- */
+.status {
+  min-height: 2.2em;
+  margin: 0 0 12px;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+/* ---- Board ---- */
+/* flow-root stops the board's bottom margin collapsing out of the stage, so the overlay matches the board exactly */
+.stage {
+  position: relative;
+  aspect-ratio: 1;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));   /* equal rows: marks can no longer stretch a row */
+  gap: var(--line);
+  background: var(--ink);             /* gaps become the grid lines */
+  border: var(--line) solid var(--ink);
+  width: 100%;
+  height: 100%;
+}
+.cell {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+/* The mark floats inside the square, so it never changes the square's size */
+.cell svg { position: absolute; inset: 14%; width: 72%; height: 72%; display: block; }
+.cell:disabled { cursor: default; }
+.cell.win { background: var(--hi); }
+@media (hover: hover) {
+  .cell:not(:disabled):hover { background: var(--mist); }
+}
+.mark-draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw 0.25s ease-out forwards;
+}
+.mark-draw + .mark-draw { animation-delay: 0.12s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* ---- Result overlay with hanko seal ---- */
+.result {
+  position: absolute;
+  inset: 0;                           /* exactly covers the board */
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.93);
+  border: var(--line) solid var(--ink);
+  text-align: center;
+  padding: 16px;
+}
+.result.show { display: flex; }
+.seal {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  background: var(--shu);
+  color: var(--paper);
+  font-family: var(--font-jp);
+  font-weight: 700;
+  font-size: 2.8rem;
+  line-height: 1;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 4px var(--shu), inset 0 0 0 6px rgba(255, 255, 255, 0.85);
+  transform: rotate(-6deg);
+  animation: stamp 0.42s cubic-bezier(.2,.9,.3,1.2) both;
+}
+@keyframes stamp {
+  0%   { opacity: 0; transform: scale(1.8) rotate(-16deg); }
+  65%  { opacity: 1; transform: scale(0.92) rotate(-4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+.result-text { margin: 0; font-family: var(--font-head); font-weight: 900; font-size: 1.5rem; line-height: 1.15; }
+.btn {
+  appearance: none;
+  border: var(--line) solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 8px 20px;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 0 0 var(--ink);
+}
+/* Hard ink shadow appears only while hovering (mouse), and flattens when pressed */
+@media (hover: hover) {
+  .btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+}
+.btn:active { transform: none; box-shadow: 0 0 0 var(--ink); }
+
+/* ---- Cheat toast ---- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  max-width: calc(100vw - 32px);
+  padding: 10px 16px;
+  background: var(--hi);
+  border: var(--line) solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---- Swipe zone (secret Konami input on phones) ---- */
+.swipe-zone {
+  touch-action: none;            /* lets swipes reach our code instead of scrolling the page */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ---- Secret pad ---- */
+.secret-pad {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px 18px;
+  background: var(--hi);
+  border: var(--line) solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  text-align: center;
+}
+.secret-pad.show { display: flex; }
+.secret-pad p { margin: 0; }
+.secret-keys { display: flex; gap: 16px; }
+.secret-keys .btn { min-width: 64px; font-size: 1.3rem; background: var(--paper); }
+
+/* ---- Record ---- */
+.record {
+  margin-top: 26px;
+  padding: 22px 26px 24px;
+  background: var(--hi);
+  border: 4px solid var(--ink);
+}
+.record-title {
+  margin: 0 0 8px;
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(1.7rem, 6vw, 2.3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.record p { margin: 0; }
+.record p + p { margin-top: 2px; }
+.record strong { font-family: var(--font-head); font-weight: 800; }
+
+@media (prefers-reduced-motion: reduce) {
+  .seal { animation: none; }
+  .mark-draw { animation: none; stroke-dashoffset: 0; }
+}
