@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Day 4: Emoji Hangman</title>
+  <meta name="description" content="Guess the movie from the emojis before the popcorn runs out.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Japanese characters used on this page: 勝 負 -->
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&text=%E5%8B%9D%E8%B2%A0&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+
+    <nav class="topnav">
+      <a class="back" href="../index.html">Back to all games</a>
+    </nav>
+
+    <header class="head">
+      <div>
+        <h1>Emoji Hangman</h1>
+        <p class="tagline">Name the movie before the popcorn runs out.</p>
+      </div>
+    </header>
+
+    <!-- START -->
+    <section class="card" id="screenStart">
+      <ol class="rules">
+        <li>Each round shows emojis that spell out a movie.</li>
+        <li>Pick letters to fill in the title. Every wrong letter eats some popcorn, and you can miss <span id="ruleMisses"></span> times before the bucket is empty.</li>
+        <li>You get <span id="ruleSeconds"></span> seconds per movie, and there are <span id="ruleRounds"></span> movies in all.</li>
+      </ol>
+      <div class="btn-row">
+        <button class="btn primary" id="startBtn" type="button">Start</button>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section class="card" id="screenGame" hidden>
+      <div class="hud">
+        <span id="roundLabel"></span>
+        <span class="time" id="timeLabel"></span>
+      </div>
+      <div class="timebar" aria-hidden="true"><div class="timefill" id="timeFill"></div></div>
+
+      <div class="stage">
+        <div class="emoji-panel" id="emojis"></div>
+        <div class="popcorn-panel">
+          <div class="popcorn" id="popcorn"></div>
+          <p class="misses" id="missLabel"></p>
+        </div>
+      </div>
+
+      <div class="word" id="word"></div>
+
+      <div class="keyboard" id="keyboard"></div>
+
+      <div class="result" id="result" hidden>
+        <div class="seal result-seal" id="resultSeal" lang="ja" aria-hidden="true">勝</div>
+        <p class="result-msg" id="resultMsg" aria-live="polite"></p>
+        <button class="btn primary" id="nextBtn" type="button">Next movie</button>
+      </div>
+
+      <div class="tally" aria-live="off">
+        <span id="winsLabel"></span>
+        <span id="lossesLabel"></span>
+      </div>
+    </section>
+
+    <!-- END -->
+    <section class="card" id="screenEnd" hidden>
+      <p class="end-score" id="endScore"></p>
+      <p class="end-line" id="endLine"></p>
+      <p class="end-line" id="endBest"></p>
+      <div class="btn-row">
+        <button class="btn primary" id="againBtn" type="button">Play again</button>
+        <a class="btn" href="../index.html">All games</a>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/analytics.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
