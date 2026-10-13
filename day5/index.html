@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Silly Typing Test | Day 5</title>
+  <meta name="description" content="Type absurd sentences as fast as you can. Day 5 of ten tiny games.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+
+    <a class="back" href="../">&larr; All games</a>
+
+    <header class="head">
+      <h1>Silly Typing Test</h1>
+    </header>
+
+    <section class="stats" aria-label="Your numbers">
+      <div class="stat stopwatch">
+        <span class="stat-label">Time</span>
+        <span class="stat-value" id="clock" aria-live="off">0.0s</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Sentence</span>
+        <span class="stat-value" id="count">1</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Best</span>
+        <span class="stat-value" id="best">&ndash;</span>
+      </div>
+    </section>
+
+    <section class="stage">
+      <p class="target" id="target" aria-label="Sentence to type"></p>
+
+      <input
+        id="typer"
+        class="typer"
+        type="text"
+        placeholder="Copy the sentence here"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        enterkeyhint="done"
+        aria-label="Type the sentence here">
+
+      <p class="hint" id="hint">The clock starts on your first key. Fix every mistake to finish.</p>
+    </section>
+
+    <noscript><p class="noscript">This game needs JavaScript. Please turn it on and refresh.</p></noscript>
+
+  </main>
+
+  <!-- Result popup -->
+  <div class="overlay" id="overlay" hidden>
+    <div class="popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+      <p class="popup-tag" id="popup-tag" hidden>New best!</p>
+      <h2 id="popup-title">Done!</h2>
+      <p class="popup-line" id="popup-line"></p>
+
+      <div class="results">
+        <div class="result">
+          <span class="result-value" id="r-wpm">0</span>
+          <span class="result-label">words per minute</span>
+        </div>
+        <div class="result">
+          <span class="result-value" id="r-acc">0%</span>
+          <span class="result-label">accuracy</span>
+        </div>
+        <div class="result">
+          <span class="result-value" id="r-time">0.00s</span>
+          <span class="result-label">time</span>
+        </div>
+      </div>
+
+      <div class="popup-actions">
+        <button class="btn btn-solid" id="btn-next" type="button">Next sentence</button>
+        <a class="btn" id="btn-home" href="../">Return to home</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/analytics.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

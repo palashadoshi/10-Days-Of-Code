@@ -1,0 +1,282 @@
+/* ---------- Design tokens (same as the hub) ---------- */
+:root {
+  --ink:   #000000;
+  --paper: #ffffff;
+  --mist:  #ececea;
+  --shu:   #c8352b;  /* hanko seal red */
+  --hi:    #f2ff3d;  /* highlighter yellow */
+  --neon:  #ff1f4d;  /* neon red for mistakes */
+  --faded: #8a8a86;  /* sentence text you haven't typed yet */
+
+  --font-head: "Nunito", "Zen Maru Gothic", system-ui, sans-serif;
+  --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-jp:   "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+
+  --line: 3px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px) clamp(16px, 4vw, 40px) 40px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--shu);
+  outline-offset: 4px;
+}
+
+/* ---------- Top bar ---------- */
+.back {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-weight: 800;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: var(--line) solid var(--ink);
+  line-height: 1.2;
+  margin-bottom: clamp(20px, 4vw, 36px);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: clamp(20px, 4vw, 32px);
+}
+h1 {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 7vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+/* ---------- Stats strip ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: clamp(20px, 4vw, 32px);
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 14px 10px;
+  border: var(--line) solid var(--ink);
+  background: var(--paper);
+}
+.stat-label {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+.stat-value {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.stopwatch.running { background: var(--hi); }
+
+/* ---------- The stage: sentence row + typing box ---------- */
+.stage {
+  border: 4px solid var(--ink);
+  padding: clamp(12px, 2.5vw, 22px);
+  background: var(--paper);
+}
+
+/* One row of text to copy */
+.target {
+  margin: 0 0 clamp(12px, 2vw, 18px);
+  padding: clamp(14px, 2.5vw, 22px) clamp(12px, 2vw, 20px);
+  border: var(--line) solid var(--ink);
+  background: var(--mist);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(1.05rem, 2.6vw, 1.65rem);
+  line-height: 1.5;
+  color: var(--faded);
+  overflow-wrap: anywhere;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.target .ch { border-radius: 2px; }
+.target .ch.ok  { color: var(--ink); }
+.target .ch.bad {
+  background: var(--neon);
+  color: var(--paper);
+  box-shadow: 0 0 10px var(--neon), 0 0 2px var(--neon);
+}
+.target .ch.cur {
+  box-shadow: inset 0 -4px 0 var(--ink);
+  color: var(--ink);
+}
+
+/* The box you type into */
+.typer {
+  display: block;
+  width: 100%;
+  padding: clamp(12px, 2.2vw, 18px) clamp(12px, 2vw, 20px);
+  border: var(--line) solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(1.05rem, 2.6vw, 1.65rem);
+  line-height: 1.4;
+  outline: none;
+  transition: box-shadow 0.1s ease, transform 0.1s ease;
+}
+.typer::placeholder { color: #b5b5b0; }
+.typer:focus {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.typer.has-error {
+  border-color: var(--neon);
+  box-shadow: 6px 6px 0 var(--neon);
+}
+.typer:disabled { background: var(--mist); }
+
+.hint {
+  margin: 14px 0 0;
+  font-size: 0.95rem;
+}
+
+.noscript {
+  border: var(--line) solid var(--ink);
+  padding: 16px;
+  font-weight: 700;
+}
+
+/* ---------- Result popup ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.78);
+}
+.overlay[hidden] { display: none; }
+
+.popup {
+  position: relative;
+  width: min(100%, 440px);
+  padding: 26px 22px 22px;
+  background: var(--hi);
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  animation: pop 0.22s cubic-bezier(.2,.9,.3,1.2) both;
+}
+.popup h2 {
+  margin: 0 0 4px;
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(1.7rem, 6vw, 2.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.popup-line { margin: 0 0 18px; }
+.popup-tag {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 1px 8px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+.popup-tag[hidden] { display: none; }
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px 8px;
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  min-width: 0;
+}
+.result-value {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.result-label {
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.popup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.btn {
+  flex: 1 1 auto;
+  padding: 10px 16px;
+  border: var(--line) solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.btn-solid { background: var(--ink); color: var(--paper); }
+.btn:active { transform: translate(0, 0); box-shadow: 0 0 0 var(--ink); }
+
+@keyframes pop {
+  0%   { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Hover effects only on devices that can really hover (stops them sticking after a tap) */
+@media (hover: hover) {
+  .btn:hover { transform: translate(-3px, -3px); box-shadow: 5px 5px 0 var(--ink); }
+  .back:hover { background: var(--hi); }
+}
+
+@media (max-width: 480px) {
+  .stats { grid-template-columns: 1.3fr 1fr 1fr; gap: 8px; }
+  .stat { padding: 6px 10px 8px; }
+  .popup { box-shadow: 6px 6px 0 var(--ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popup,   .typer, .btn { transition: none; }
+}
