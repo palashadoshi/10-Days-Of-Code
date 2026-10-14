@@ -11,7 +11,7 @@ const GAMES = [
   { day: 3,  title: "Unbeatable Tic-Tac-Toe",     blurb: "The machine never loses. Prove me wrong.", path: "day3/",  live: true },
   { day: 4,  title: "Emoji Hangman",              blurb: "Guess the movie from the emojis before time runs out.", path: "day4/",  live: true },
   { day: 5,  title: "Silly Typing Test",          blurb: "Type absurd sentences as fast as you can.", path: "day5/",  live: true },
-  { day: 6,  title: "Simon Says",                 blurb: "Watch the lights. Repeat the pattern.", path: "day6/",  live: false },
+  { day: 6,  title: "Simon Says",                 blurb: "Watch the lights. Repeat the pattern.", path: "day6/",  live: true },
   { day: 7,  title: "Life Calculator",            blurb: "Type your birthday and see how many time your heart's beat.", path: "day7/",  live: false },
   { day: 8,  title: "Password Incorrect",         blurb: "Regular passwords won't cut it anymore.", path: "day8/",  live: false },
   { day: 9,  title: "Anaconda",                   blurb: "Snake with a twist.", path: "day9/",  live: false },
