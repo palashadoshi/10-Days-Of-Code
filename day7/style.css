@@ -1,0 +1,201 @@
+/* ---------- Design tokens (shared with the hub) ---------- */
+:root {
+  --ink:   #000000;
+  --paper: #ffffff;
+  --mist:  #ececea;
+  --hi:    #f2ff3d;
+  --err:   #c8352b;
+
+  --font-head: "Nunito", system-ui, sans-serif;
+  --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+
+  --gutter: clamp(10px, 1.6vw, 16px);
+  --frame: 4px;
+  --line: 3px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 56px) clamp(18px, 4vw, 40px) 40px;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--err);
+  outline-offset: 3px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: clamp(24px, 4vw, 40px);
+  font-family: var(--font-head);
+  font-weight: 800;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: var(--line) solid var(--ink);
+  line-height: 1.2;
+}
+
+/* ---------- Header ---------- */
+.head { text-align: center; }
+
+h1 {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(2.75rem, 9vw, 5.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.35em;
+}
+.intro {
+  max-width: 32em;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  margin: 0 auto 32px;
+}
+
+/* ---------- Form ---------- */
+.form {
+  border: var(--frame) solid var(--ink);
+  padding: clamp(14px, 3vw, 24px);
+  margin: 0 auto 36px;
+  max-width: 560px;
+}
+.form label {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+input[type="date"] {
+  flex: 1 1 180px;
+  min-width: 0;
+  font: inherit;
+  font-size: 1.1rem;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--line) solid var(--ink);
+  border-radius: 0;
+}
+button {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 10px 22px;
+  color: var(--ink);
+  background: var(--hi);
+  border: var(--line) solid var(--ink);
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+@media (hover: hover) {
+  button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+}
+button:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
+
+.error {
+  min-height: 1.55em;
+  margin: 10px 0 0;
+  font-weight: 700;
+  color: var(--err);
+}
+
+/* ---------- Results ---------- */
+.results[hidden] { display: none; }
+
+.hero-stat {
+  border: var(--frame) solid var(--ink);
+  padding: clamp(16px, 4vw, 32px);
+  margin-bottom: var(--gutter);
+  background: var(--paper);
+}
+.hero-label {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+.hero-number {
+  margin: 4px 0;
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 9.5vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.hero-number span {
+  background: linear-gradient(transparent 42%, var(--hi) 42%, var(--hi) 94%, transparent 94%);
+  padding: 0 4px;
+  margin: 0 -4px;
+}
+
+.stats {
+  list-style: none;
+  margin: 0;
+  padding: var(--gutter);
+  border: var(--frame) solid var(--ink);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter);
+}
+@media (min-width: 760px) {
+  .stats { grid-template-columns: repeat(3, 1fr); }
+}
+.stat {
+  border: var(--line) solid var(--ink);
+  padding: 12px 14px 14px;
+  min-width: 0;
+}
+.stat-num {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(1.35rem, 3.4vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.stat-label {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.next {
+  margin: 24px 0 8px;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+.fine {
+  margin: 0;
+  max-width: 40em;
+  font-size: 0.9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+  button:hover { transform: none; }
+}

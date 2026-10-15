@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Life Calculator | Day 7</title>
+  <meta name="description" content="Type your birthday and read the numbers of your life.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫀</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+
+    <a class="back" href="../">Back to all games</a>
+
+    <header class="head">
+      <h1>Life<br>Calculator</h1>
+      <p class="intro">
+        Type your birthday and see the numbers behind your life so far.
+        Everything is worked out in your browser. Nothing is saved or sent anywhere.
+      </p>
+    </header>
+
+    <div class="form" role="group" aria-label="Birthday">
+      <label for="dob">Your birthday</label>
+      <div class="row">
+        <input type="date" id="dob" min="1900-01-01">
+        <button type="button" id="go">Calculate</button>
+      </div>
+      <p class="error" id="error" role="alert"></p>
+    </div>
+
+    <section class="results" id="results" hidden aria-live="polite">
+
+      <div class="hero-stat">
+        <p class="hero-label">Your heart has beaten about</p>
+        <p class="hero-number" id="beats">0</p>
+        <p class="hero-label">times, and it just did it again.</p>
+      </div>
+
+      <ul class="stats" id="stats"></ul>
+
+      <p class="next" id="next"></p>
+      <p class="fine">These are rough estimates based on averages (a resting heart rate of 75, 16 breaths a minute, 8 hours of sleep a night). Your real numbers will differ.</p>
+    </section>
+
+  </main>
+
+  <script src="/analytics.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
