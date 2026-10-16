@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Password Incorrect</title>
+  <meta name="description" content="Pick a password. The rules keep getting sillier. How far can you get?">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Zen Maru Gothic only for the one kanji used on this page (勝) -->
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&text=%E5%8B%9D&display=swap" rel="stylesheet">
+
+  <script defer src="/analytics.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <a class="back" href="../">Back to all games</a>
+
+    <header>
+      <h1>Password<br>Incorrect.</h1>
+      <p class="intro">Pick a password. Easy, right? New rules show up one at a time, and if you break one, it comes back.</p>
+    </header>
+
+    <section class="entry">
+      <label for="pw" class="sr">Your password</label>
+      <input id="pw" type="text" placeholder="Type a password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="200">
+      <div class="meta">
+        <span id="count">0 characters</span>
+        <span id="progress">Rule 0 of 30</span>
+        <span id="timer">0:00</span>
+      </div>
+    </section>
+
+    <section class="win" id="win" hidden>
+      <div class="seal" lang="ja" aria-hidden="true">勝</div>
+      <h2>Password accepted.</h2>
+      <p id="win-text"></p>
+      <button type="button" id="again">Play again</button>
+    </section>
+
+    <ol class="rules" id="rules" aria-label="Password rules"></ol>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
