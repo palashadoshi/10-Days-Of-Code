@@ -53,6 +53,117 @@ function findDouble(pw) {
   return null;
 }
 
+// ---- The wildcard (rule 31) ----
+// One rule that swaps itself for a different one every 30 seconds.
+// Picks are random, so nobody can wait for "their" rule. A rule that is picked
+// again right after itself gets 1/3 less chance each time in a row, and goes
+// back to full chance once a different rule has replaced it.
+const WILD_SECONDS = 30;
+let wildIndex = 0;       // which wildcard is showing
+let wildStreak = 0;      // how many times in a row it has shown
+let wildLeft = WILD_SECONDS;
+let wildTimerId = null;
+
+const specialCount = (pw) => (pw.match(/[^A-Za-z0-9\s\p{Extended_Pictographic}]/gu) || []).length;
+const digitCount = (pw) => (pw.match(/\d/g) || []).length;
+const firstThree = (pw) => Array.from(pw).slice(0, 3).join("");
+
+function digitUsedTooMuch(pw) {
+  const seen = {};
+  for (const d of pw.match(/\d/g) || []) {
+    seen[d] = (seen[d] || 0) + 1;
+    if (seen[d] > 2) return d;
+  }
+  return null;
+}
+
+function weekdayBeforePlanet(pw) {
+  const lower = pw.toLowerCase();
+  const i = lower.indexOf(TODAY);
+  if (i < 0) return false;
+  return PLANETS.some((p) => lower.indexOf(p, i + TODAY.length) !== -1);
+}
+
+function colorAfterMonth(pw) {
+  const lower = pw.toLowerCase();
+  const ends = MONTHS.filter((m) => lower.includes(m)).map((m) => lower.indexOf(m) + m.length);
+  if (!ends.length) return false;
+  const first = Math.min(...ends);
+  return COLORS.some((c) => lower.indexOf(c, first) !== -1);
+}
+
+// Each wildcard clashes with at least two of the normal rules, on purpose.
+const WILDCARDS = [
+  { text: "Your password must have exactly 3 uppercase letters.",   // vs rules 15, 27
+    test: (pw) => upperCount(pw) === 3,
+    hint: (pw) => `Right now it has ${upperCount(pw)}.` },
+  { text: "No digit may appear more than twice.",                   // vs rules 5, 9, 25
+    test: (pw) => digitUsedTooMuch(pw) === null,
+    hint: (pw) => `You have too many ${digitUsedTooMuch(pw)}s.` },
+  { text: "Your password must be at least 40 characters.",          // vs rules 19, 29, 30
+    test: (pw) => length(pw) >= 40,
+    hint: (pw) => `Right now it is ${length(pw)} characters.` },
+  { text: "Your password may have at most 2 special characters.",   // vs rules 4, 16, 28
+    test: (pw) => specialCount(pw) <= 2,
+    hint: (pw) => `Right now it has ${specialCount(pw)}. Emoji don't count.` },
+  { text: "Your password must contain a palindrome at least 7 characters long.",  // vs rules 18, 23, 30
+    test: (pw) => hasPalindrome(pw, 7),
+    hint: () => "It has to be an odd length, because of the no-repeats rule." },
+  { text: "The first 3 characters of your password must contain no vowels.",      // vs rules 24, 27
+    test: (pw) => !/[aeiou]/i.test(firstThree(pw)),
+    hint: (pw) => `Right now they are "${firstThree(pw)}".` },
+  { text: "The color in your password must come after the month.",  // vs rules 10, 11
+    test: (pw) => colorAfterMonth(pw),
+    hint: () => "Month first, then a color." },
+  { text: "Your uppercase letters must outnumber your digits.",     // vs rules 5, 15, 27
+    test: (pw) => upperCount(pw) > digitCount(pw),
+    hint: (pw) => `Right now: ${upperCount(pw)} uppercase, ${digitCount(pw)} digits.` },
+  { text: "Your password must include exactly 3 emoji.",            // vs rules 8, 20, 23
+    test: (pw) => emojiCount(pw) === 3,
+    hint: (pw) => `Right now it has ${emojiCount(pw)}.` },
+  { text: "Today's day of the week must appear before a planet.",   // vs rules 6, 7
+    test: (pw) => weekdayBeforePlanet(pw),
+    hint: () => "Order matters." },
+];
+
+// Weighted random pick. Only the rule currently showing is ever penalized.
+function pickWildcard() {
+  const weights = WILDCARDS.map((_, i) => (i === wildIndex && wildStreak > 0 ? Math.pow(2 / 3, wildStreak) : 1));
+  let r = Math.random() * weights.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < weights.length; i++) {
+    r -= weights[i];
+    if (r < 0) return i;
+  }
+  return weights.length - 1;
+}
+
+function nextWildcard() {
+  const next = pickWildcard();
+  if (next === wildIndex && wildStreak > 0) {
+    wildStreak++;                 // same rule again: the streak grows
+  } else {
+    wildIndex = next;             // switched out: streak starts over
+    wildStreak = 1;
+  }
+  wildLeft = WILD_SECONDS;
+}
+
+function startWild() {
+  if (wildTimerId !== null) return;
+  wildStreak = 0;
+  nextWildcard();                 // first pick is fully random
+  wildTimerId = setInterval(() => {
+    wildLeft--;
+    if (wildLeft <= 0) nextWildcard();
+    update();
+  }, 1000);
+}
+
+function stopWild() {
+  clearInterval(wildTimerId);
+  wildTimerId = null;
+}
+
 function isPrime(n) {
   if (n < 2) return false;
   for (let i = 2; i * i <= n; i++) if (n % i === 0) return false;
@@ -141,6 +252,11 @@ const RULES = [
   { text: "The length of your password must be a prime number.",
     test: (pw) => isPrime(length(pw)),
     hint: (pw) => `Right now it is ${length(pw)} characters.` },
+  { wild: true,
+    label: "Rule 31: the wildcard",
+    text: () => WILDCARDS[wildIndex].text,
+    test: (pw) => wildTimerId !== null && WILDCARDS[wildIndex].test(pw),
+    hint: (pw) => WILDCARDS[wildIndex].hint(pw) },
 ];
 
 // ---------- Page elements ----------
@@ -193,7 +309,7 @@ function render(pw, popFrom) {
 
   items.forEach(({ rule, i, ok }) => {
     const isNewest = i === revealed - 1 && !ok;
-    let cls = "rule " + (ok ? "ok" : "bad");
+    let cls = "rule " + (ok ? "ok" : "bad") + (rule.wild ? " wild" : "");
     if (isNewest) cls += " newest";
     if (i >= popFrom) cls += " pop";
 
@@ -201,11 +317,19 @@ function render(pw, popFrom) {
     li.append(el("span", "badge", ok ? "✓" : "!"));
 
     const body = el("div");
-    body.append(el("p", "rule-label", "Rule " + (i + 1)));
+    body.append(el("p", "rule-label", rule.label || "Rule " + (i + 1)));
     const text = el("p", "rule-text");
-    text.append(el("span", "", rule.text));
+    text.append(el("span", "", typeof rule.text === "function" ? rule.text(pw) : rule.text));
     body.append(text);
     if (rule.hint && !ok) body.append(el("p", "rule-hint", rule.hint(pw)));
+    if (rule.wild) {
+      body.append(el("p", "rule-hint", `Changes in ${wildLeft}s.`));
+      const bar = el("div", "wild-bar");
+      const fill = el("div", "wild-fill");
+      fill.style.width = (wildLeft / WILD_SECONDS) * 100 + "%";
+      bar.append(fill);
+      body.append(bar);
+    }
     li.append(body);
     list.append(li);
   });
@@ -221,6 +345,8 @@ function update() {
     revealed++;
   }
 
+  if (revealed === RULES.length) startWild();
+
   render(pw, before);
   countEl.textContent = length(pw) + (length(pw) === 1 ? " character" : " characters");
   progressEl.textContent = "Rule " + Math.max(revealed, 1) + " of " + RULES.length;
@@ -228,6 +354,7 @@ function update() {
   if (!won && revealed === RULES.length && RULES.every((r) => r.test(pw))) {
     won = true;
     stopTimer();
+    stopWild();
     const time = formatTime(Date.now() - startTime);
     winText.textContent = `You beat all ${RULES.length} rules in ${time}. Your password is ${length(pw)} characters long.`;
     winEl.hidden = false;
@@ -238,6 +365,7 @@ function update() {
 
 function reset() {
   stopTimer();
+  stopWild();
   startTime = null;
   revealed = 0;
   won = false;
@@ -251,5 +379,6 @@ function reset() {
 
 input.addEventListener("input", update);
 againBtn.addEventListener("click", reset);
+
 update();
 input.focus();

@@ -139,6 +139,10 @@ h1 {
 }
 .rule-hint { margin: 4px 0 0; font-size: 0.95rem; }
 
+.rule.wild { border-width: 4px; box-shadow: 5px 5px 0 var(--ink); }
+.wild-bar { height: 8px; margin-top: 8px; border: 2px solid var(--ink); background: var(--paper); }
+.wild-fill { height: 100%; background: var(--ink); transition: width 1s linear; }
+
 @keyframes pop {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: none; }
@@ -189,5 +193,6 @@ button:active { transform: translate(0, 0); box-shadow: 0 0 0 var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   .rule.pop, .win .seal { animation: none; }
+  .wild-fill { transition: none; }
   button:hover { transform: none; }
 }
