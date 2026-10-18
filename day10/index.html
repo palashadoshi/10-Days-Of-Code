@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>5 Letter Word</title>
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script defer src="/analytics.js"></script>
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="../">Back to all games</a>
+
+    <h1>5 Letter Word</h1>
+    <p class="sub">Guess my word in 6 tries.</p>
+
+    <div id="board" class="grid" aria-label="Guess grid"></div>
+    <p id="msg" class="msg" role="status" aria-live="polite"></p>
+
+    <div id="kb" class="kb" aria-label="Keyboard"></div>
+
+    <button id="again" class="again" type="button" hidden>Play again</button>
+    <p id="stats" class="stats"></p>
+  </main>
+
+  <script src="words.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

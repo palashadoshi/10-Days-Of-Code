@@ -15,7 +15,7 @@ const GAMES = [
   { day: 7,  title: "Life Calculator",            blurb: "Type your birthday and see how many time your heart's beat.", path: "day7/",  live: true },
   { day: 8,  title: "Password Incorrect",         blurb: "Regular passwords won't cut it anymore.", path: "day8/",  live: true },
   { day: 9,  title: "Anaconda",                   blurb: "Snake with a twist. Can you handle the chaos?", path: "day9/",  live: true },
-  { day: 10, title: "5 Letter Word",              blurb: "Guess my word in 6 tries. The final step.", path: "day10/", live: false },
+  { day: 10, title: "5 Letter Word",              blurb: "Guess my word in 6 tries. The final step.", path: "day10/", live: true },
 ];
 
 const KANJI = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
