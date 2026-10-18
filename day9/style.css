@@ -1,0 +1,62 @@
+:root {
+  --ink: #000; --paper: #fff; --mist: #ececea; --shu: #c8352b; --hi: #f2ff3d;
+  --font-head: "Nunito", system-ui, sans-serif;
+  --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --line: 3px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.5; }
+.page { max-width: 560px; margin: 0 auto; padding: 24px 18px 48px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--shu); outline-offset: 3px; }
+
+.back { font-family: var(--font-head); font-weight: 800; color: var(--ink); text-decoration: none; border-bottom: var(--line) solid var(--ink); }
+h1 { font-family: var(--font-head); font-weight: 900; font-size: clamp(2.6rem, 11vw, 4rem); line-height: 1; letter-spacing: -0.025em; margin: 28px 0 14px; }
+.intro { margin: 0 0 18px; font-size: 1.15rem; }
+
+/* Mode picker: four manga panels */
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; border: 4px solid var(--ink); }
+.mode {
+  display: flex; flex-direction: column; text-align: left; min-height: 150px; padding: 12px 14px;
+  background: var(--paper); color: var(--ink); border: var(--line) solid var(--ink);
+  font: inherit; cursor: pointer; transition: transform .12s, box-shadow .12s;
+}
+.mode-name { font-family: var(--font-head); font-weight: 900; font-size: 1.3rem; line-height: 1.1; }
+.mode-desc { font-size: .95rem; line-height: 1.35; margin-top: 6px; }
+.mode-best { margin-top: auto; font-family: var(--font-head); font-weight: 800; font-size: .9rem; }
+@media (hover: hover) {
+  .mode:hover { transform: translate(-4px, -4px); box-shadow: 6px 6px 0 var(--ink); background: var(--hi); }
+}
+.mode:active { transform: none; box-shadow: none; background: var(--hi); }
+
+/* Game */
+.bar { display: flex; align-items: center; gap: 18px; margin-bottom: 10px; font-family: var(--font-head); font-weight: 800; }
+.bar b { font-weight: 900; font-size: 1.2em; }
+.bar .small { margin-left: auto; }
+button.small, #again {
+  font-family: var(--font-head); font-weight: 800; font-size: .95rem; padding: 4px 12px;
+  background: var(--paper); color: var(--ink); border: 2px solid var(--ink); cursor: pointer;
+}
+@media (hover: hover) { button.small:hover, #again:hover { background: var(--hi); } }
+button.small:active, #again:active { background: var(--hi); }
+
+.stage { position: relative; border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); background: var(--paper); }
+canvas { display: block; width: 100%; height: auto; aspect-ratio: 1; touch-action: none; }
+.overlay {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  background: rgba(255, 255, 255, .92); text-align: center; padding: 16px;
+}
+.overlay h2 { font-family: var(--font-head); font-weight: 900; font-size: 2.2rem; margin: 0; }
+.overlay p { margin: 0 0 10px; font-weight: 700; }
+#again { font-size: 1.1rem; padding: 6px 18px; border-width: 3px; background: var(--hi); }
+
+.hint { margin: 16px 0 8px; font-size: .95rem; }
+.dpad { display: none; grid-template-columns: repeat(3, 64px); grid-template-areas: ". up ." "left down right"; gap: 8px; justify-content: center; margin-top: 12px; }
+@media (pointer: coarse) { .dpad { display: grid; } }
+.dpad button { height: 56px; font-size: 1.3rem; background: var(--paper); color: var(--ink); border: var(--line) solid var(--ink); touch-action: manipulation; }
+.dpad button:active { background: var(--hi); }
+.dpad [data-d=up] { grid-area: up; } .dpad [data-d=left] { grid-area: left; }
+.dpad [data-d=down] { grid-area: down; } .dpad [data-d=right] { grid-area: right; }
+
+@media (max-width: 420px) { .mode { min-height: 140px; } .mode-name { font-size: 1.15rem; } }
+@media (prefers-reduced-motion: reduce) { .mode { transition: none; } }

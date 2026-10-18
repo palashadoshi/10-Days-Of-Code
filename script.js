@@ -14,7 +14,7 @@ const GAMES = [
   { day: 6,  title: "Simon Says",                 blurb: "Watch the lights. Repeat the pattern.", path: "day6/",  live: true },
   { day: 7,  title: "Life Calculator",            blurb: "Type your birthday and see how many time your heart's beat.", path: "day7/",  live: true },
   { day: 8,  title: "Password Incorrect",         blurb: "Regular passwords won't cut it anymore.", path: "day8/",  live: true },
-  { day: 9,  title: "Anaconda",                   blurb: "Snake with a twist.", path: "day9/",  live: false },
+  { day: 9,  title: "Anaconda",                   blurb: "Snake with a twist. Can you handle the chaos?", path: "day9/",  live: true },
   { day: 10, title: "5 Letter Word",              blurb: "Guess my word in 6 tries. The final step.", path: "day10/", live: false },
 ];
 

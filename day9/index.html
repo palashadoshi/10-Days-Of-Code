@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anaconda</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <a class="back" href="../">Back to all games</a>
+    <h1>Anaconda</h1>
+
+    <section id="menu">
+      <p class="intro">Pick your twist.</p>
+      <div class="modes">
+        <button class="mode" data-mode="classic"><span class="mode-name">Classic</span><span class="mode-desc">No tricks. Eat, grow, don't crash.</span><span class="mode-best"></span></button>
+        <button class="mode" data-mode="ghost"><span class="mode-name">Ghost Snake</span><span class="mode-desc">Every so often, the snake vanishes.</span><span class="mode-best"></span></button>
+        <button class="mode" data-mode="runaway"><span class="mode-name">Runaway Food</span><span class="mode-desc">The food doesn't want to be eaten.</span><span class="mode-best"></span></button>
+        <button class="mode" data-mode="walls"><span class="mode-name">Barriers</span><span class="mode-desc">Walls keep popping up. Eat fast.</span><span class="mode-best"></span></button>
+      </div>
+    </section>
+
+    <section id="game" hidden>
+      <div class="bar">
+        <span>Score <b id="score">0</b></span>
+        <span>Best <b id="best">0</b></span>
+        <button id="change" class="small">Change mode</button>
+      </div>
+      <div class="stage">
+        <canvas id="c" width="400" height="400" aria-label="Snake game board"></canvas>
+        <div class="overlay" id="overlay" hidden>
+          <h2 id="ov-title">Game over</h2>
+          <p id="ov-msg"></p>
+          <button id="again">Play again</button>
+        </div>
+      </div>
+      <p class="hint">Arrow keys or WASD. On a phone, swipe or use the pad.</p>
+      <div class="dpad" aria-label="Direction pad">
+        <button data-d="up" aria-label="Up">▲</button>
+        <button data-d="left" aria-label="Left">◀</button>
+        <button data-d="down" aria-label="Down">▼</button>
+        <button data-d="right" aria-label="Right">▶</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/analytics.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
